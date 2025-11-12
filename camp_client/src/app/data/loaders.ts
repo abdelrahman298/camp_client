@@ -107,7 +107,7 @@ export async function getPageData(slug: string) {
 
 // ?////////////////////////////////////////////////////////////////////////////////////////////
 
-// ! get Global Types Data ( Header - Footer)
+// ! get Global Types Data ( Header-Footer)
 
 const globalSettingQuery = qs.stringify({
   populate: {
@@ -147,7 +147,7 @@ export async function getGlobalSettings() {
   return fetchAPI(url.href, { method: "GET" });
 }
 
-// ! get Blog Content List
+//! get Blog Content List
 
 export async function getContent(path: string, featured?: boolean) {
   const url = new URL(path, BASE_URL);
