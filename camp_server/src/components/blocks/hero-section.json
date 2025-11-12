@@ -1,0 +1,37 @@
+{
+  "collectionName": "components_blocks_hero_sections",
+  "info": {
+    "displayName": "hero section"
+  },
+  "options": {},
+  "attributes": {
+    "logo": {
+      "type": "component",
+      "component": "elements.logo",
+      "repeatable": false
+    },
+    "heading": {
+      "type": "text"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "cta": {
+      "type": "component",
+      "component": "elements.link",
+      "repeatable": false
+    },
+    "theme": {
+      "type": "enumeration",
+      "enum": [
+        "terqouse",
+        "orange"
+      ]
+    }
+  },
+  "config": {}
+}

@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_blocks_paragraghs",
+  "info": {
+    "displayName": "paragragh"
+  },
+  "options": {},
+  "attributes": {
+    "content": {
+      "type": "richtext"
+    }
+  },
+  "config": {}
+}

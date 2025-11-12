@@ -1,0 +1,168 @@
+import { getStrapiURL } from "@/app/utils/get-strapi-url";
+import { fetchAPI } from "@/app/utils/fetch-api";
+import qs from "qs";
+
+const BLOG_PAGE_SIZE = 3;
+const BASE_URL = getStrapiURL();
+
+const homePageQuery = qs.stringify({
+  populate: {
+    blocks: {
+      on: {
+        "blocks.hero-section": {
+          populate: {
+            image: {
+              fields: ["url", "alternativeText"],
+            },
+            logo: {
+              populate: {
+                image: {
+                  fields: ["url", "alternativeText"],
+                },
+              },
+            },
+            cta: true,
+          },
+        },
+        "blocks.info-section": {
+          populate: {
+            image: {
+              fields: ["url", "alternativeText"],
+            },
+            cta: true,
+          },
+        },
+      },
+    },
+  },
+});
+
+export async function getHomePage() {
+  const path = "/api/home-page";
+  const url = new URL(path, BASE_URL);
+
+  url.search = homePageQuery;
+  return await fetchAPI(url.href, { method: "GET" });
+}
+
+// ! to get the Query Builder according to the pages by using the  Slug like : home - blog - experience
+// ! and send it to getPageData ()
+const pageBySlugQuery = (slug: string) =>
+  qs.stringify({
+    filters: {
+      slug: {
+        $eq: slug,
+      },
+    },
+    populate: {
+      blocks: {
+        on: {
+          "blocks.hero-section": {
+            populate: {
+              image: {
+                fields: ["url", "alternativeText"],
+              },
+              logo: {
+                populate: {
+                  image: {
+                    fields: ["url", "alternativeText"],
+                  },
+                },
+              },
+              cta: true,
+            },
+          },
+          "blocks.info-section": {
+            populate: {
+              image: {
+                fields: ["url", "alternativeText"],
+              },
+              cta: true,
+            },
+          },
+          "blocks.featured-article": {
+            populate: {
+              image: {
+                fields: ["url", "alternativeText"],
+              },
+              link: true,
+            },
+          },
+          "blocks.subscribe": {
+            populate: true,
+          },
+        },
+      },
+    },
+  });
+
+export async function getPageData(slug: string) {
+  const path = "/api/pages";
+  const url = new URL(path, BASE_URL);
+
+  url.search = pageBySlugQuery(slug);
+
+  return await fetchAPI(url.href, { method: "GET" });
+}
+
+// ?////////////////////////////////////////////////////////////////////////////////////////////
+
+// ! get Global Types Data ( Header - Footer)
+
+const globalSettingQuery = qs.stringify({
+  populate: {
+    header: {
+      populate: {
+        logo: {
+          populate: {
+            image: {
+              fields: ["url", "alternativeText"],
+            },
+          },
+        },
+        navigation: true,
+        cta: true,
+      },
+    },
+    footer: {
+      populate: {
+        logo: {
+          populate: {
+            image: {
+              fields: ["url", "alternativeText"],
+            },
+          },
+        },
+        navigation: true,
+        policies: true,
+      },
+    },
+  },
+});
+
+export async function getGlobalSettings() {
+  const path = "/api/global";
+  const url = new URL(path, BASE_URL);
+  url.search = globalSettingQuery;
+  return fetchAPI(url.href, { method: "GET" });
+}
+
+// ! get Blog Content List
+
+export async function getContent(path: string, featured?: boolean) {
+  const url = new URL(path, BASE_URL);
+
+  url.search = qs.stringify({
+    sort: ["createdAt:desc"],
+    filters: {
+      ...(featured && { featured: { $eq: featured } }),
+    },
+    populate: {
+      image: {
+        fields: ["url", "alternativeText"],
+      },
+    },
+  });
+
+  return fetchAPI(url.href, { method: "GET" });
+}
