@@ -149,13 +149,26 @@ export async function getGlobalSettings() {
 
 //! get Blog Content List
 
-export async function getContent(path: string, featured?: boolean) {
+export async function getContent(
+  path: string,
+  featured?: boolean,
+  query?: string,
+  page?: string
+) {
   const url = new URL(path, BASE_URL);
 
   url.search = qs.stringify({
     sort: ["createdAt:desc"],
     filters: {
+      $or: [
+        { title: { $containsi: query } },
+        { description: { $containsi: query } },
+      ],
       ...(featured && { featured: { $eq: featured } }),
+    },
+    pagination: {
+      pageSize: BLOG_PAGE_SIZE,
+      page: parseInt(page || "1"),
     },
     populate: {
       image: {
@@ -163,6 +176,92 @@ export async function getContent(path: string, featured?: boolean) {
       },
     },
   });
+
+  return fetchAPI(url.href, { method: "GET" });
+}
+
+// ! Blog Data Loader
+
+const blogPopulate = {
+  blocks: {
+    on: {
+      "blocks.hero-section": {
+        populate: {
+          image: {
+            fields: ["url", "alternativeText"],
+          },
+          logo: {
+            populate: {
+              image: {
+                fields: ["url", "alternativeText"],
+              },
+            },
+          },
+          cta: true,
+        },
+      },
+      "blocks.info-section": {
+        populate: {
+          image: {
+            fields: ["url", "alternativeText"],
+          },
+          cta: true,
+        },
+      },
+      "blocks.featured-article": {
+        populate: {
+          image: {
+            fields: ["url", "alternativeText"],
+          },
+          link: true,
+        },
+      },
+      "blocks.subscribe": {
+        populate: true,
+      },
+      "blocks.heading": {
+        populate: true,
+      },
+      "blocks.paragraph": {
+        populate: true,
+      },
+      "blocks.paragraph-with-image": {
+        populate: {
+          image: {
+            fields: ["url", "alternativeText"],
+          },
+        },
+      },
+      "blocks.full-image": {
+        populate: {
+          image: {
+            fields: ["url", "alternativeText"],
+          },
+        },
+      },
+    },
+  },
+};
+
+export async function getContentBySlug(slug: string, path: string) {
+  const url = new URL(path, BASE_URL);
+
+  url.search = qs.stringify({
+    filters: {
+      slug: {
+        $eq: slug,
+      },
+    },
+    populate: {
+      image: {
+        fields: ["url", "alternativeText"],
+      },
+      ...blogPopulate,
+    },
+  });
+
+  // console.log("this is the url of Event " + url.search);
+  // console.log("this is the url of Event " + blogPopulate);
 
   return fetchAPI(url.href, { method: "GET" });
 }

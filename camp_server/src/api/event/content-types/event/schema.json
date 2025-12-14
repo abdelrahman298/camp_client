@@ -1,10 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "articles",
+  "collectionName": "events",
   "info": {
-    "singularName": "article",
-    "pluralName": "articles",
-    "displayName": "Article"
+    "singularName": "event",
+    "pluralName": "events",
+    "displayName": "Event"
   },
   "options": {
     "draftAndPublish": true
@@ -21,9 +21,6 @@
       "type": "uid",
       "targetField": "title"
     },
-    "author": {
-      "type": "string"
-    },
     "image": {
       "type": "media",
       "multiple": false,
@@ -35,15 +32,25 @@
       "type": "boolean",
       "default": false
     },
+    "price": {
+      "type": "text"
+    },
+    "startDate": {
+      "type": "datetime"
+    },
     "blocks": {
       "type": "dynamiczone",
       "components": [
-        "blocks.paragraph-with-image",
-        "blocks.hero-section",
         "blocks.heading",
-        "blocks.full-image",
-        "blocks.featured-article"
+        "blocks.paragraph",
+        "blocks.full-image"
       ]
+    },
+    "eventSign_ups": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::event-sign-up.event-sign-up",
+      "mappedBy": "event"
     }
   }
 }

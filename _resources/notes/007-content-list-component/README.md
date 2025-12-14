@@ -174,7 +174,7 @@ Add the following in the `app/blog/page.tsx` file.
 
 ```tsx
 import { Card, type CardProps } from "@/components/Card";
-const BlogCard = (props: Readonly<CardProps>) => (
+const BlogCard = (props: Readonly<CardProps>) => ( 
   <Card {...props} basePath="blog" />
 );
 

@@ -149,7 +149,6 @@ export async function getContentBySlug(slug: string, path: string) {
 
   return fetchAPI(url.href, { method: "GET" });
 }
-
 ```
 
 Now that we have the loader function, our import statement should now stop throwing error.
@@ -220,16 +219,16 @@ export function Heading({ heading, linkId }: Readonly<HeadingProps>) {
 `Paragraph.tsx` code:
 
 ```tsx
-import React from 'react'
-import { ParagraphProps } from '@/types'
-import ReactMarkdown from 'react-markdown'
+import React from "react";
+import { ParagraphProps } from "@/types";
+import ReactMarkdown from "react-markdown";
 
 export function Paragraph({ content }: Readonly<ParagraphProps>) {
   return (
     <div className="copy article-paragraph">
       <ReactMarkdown>{content}</ReactMarkdown>
     </div>
-  )
+  );
 }
 ```
 
@@ -268,7 +267,11 @@ export function ParagraphWithImage({
   imageLandscape,
 }: Readonly<ParagraphWithImageProps>) {
   return (
-    <div className={`article-text-image ${reversed ? "article-text-image--reversed" : ""} ${imageLandscape ? "" : "article-text-image--portrait"}`}>
+    <div
+      className={`article-text-image ${
+        reversed ? "article-text-image--reversed" : ""
+      } ${imageLandscape ? "" : "article-text-image--portrait"}`}
+    >
       <ReactMarkdown className="copy article-text-image__text article-paragraph">
         {content}
       </ReactMarkdown>
@@ -284,7 +287,6 @@ export function ParagraphWithImage({
     </div>
   );
 }
-
 ```
 
 Now that we have the blocks, we need to update our `BlockRenderer` component to render the new blocks.
@@ -304,7 +306,10 @@ type ComponentType =
   | "blocks.paragraph"
   | "blocks.full-image";
 
-interface Base<T extends ComponentType, D extends object = Record<string, unknown>> {
+interface Base<
+  T extends ComponentType,
+  D extends object = Record<string, unknown>
+> {
   id: number;
   __component?: T;
   documentId?: string;
@@ -362,7 +367,8 @@ export interface HeadingProps extends Base<"blocks.heading"> {
   linkId?: string;
 }
 
-export interface ParagraphWithImageProps extends Base<"blocks.paragraph-with-image"> {
+export interface ParagraphWithImageProps
+  extends Base<"blocks.paragraph-with-image"> {
   content: string;
   image: ImageProps;
   reversed?: boolean;
@@ -422,12 +428,11 @@ function blockRenderer(block: Block, index: number) {
 export function BlockRenderer({ blocks }: { blocks: Block[] }) {
   return blocks.map((block, index) => blockRenderer(block, index));
 }
-
 ```
 
-Final Code: 
+Final Code:
 
-``` tsx
+```tsx
 import type { ArticleProps, Block } from "@/types";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -482,8 +487,9 @@ function ArticleOverview({
   );
 }
 
-const BlogCard = (props: Readonly<CardProps>) => <Card {...props} basePath="blog" />;
-
+const BlogCard = (props: Readonly<CardProps>) => (
+  <Card {...props} basePath="blog" />
+);
 
 export default async function SingleBlogRoute({ params }: PageProps) {
   const slug = (await params).slug;
@@ -508,7 +514,7 @@ export default async function SingleBlogRoute({ params }: PageProps) {
         darken={true}
       />
 
-      <div className="container">
+      `<div className="container">
         <ArticleOverview
           headline={title}
           description={description}
@@ -522,8 +528,7 @@ export default async function SingleBlogRoute({ params }: PageProps) {
           featured={true}
         />
       </div>
-    </div>
+    </div>`
   );
 }
-
 ```

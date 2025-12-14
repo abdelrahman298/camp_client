@@ -5,7 +5,7 @@ import { ContentList } from "../components/content_list";
 import { BlogCard } from "../components/BlogCard";
 
 interface PageProps {
-  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ page?: string; query?: string }>;
 }
 
 async function loaders(slug: string) {
@@ -15,13 +15,11 @@ async function loaders(slug: string) {
   return pageData;
 }
 
-export default async function BlogRoute({ params }: PageProps) {
+export default async function BlogRoute({ searchParams }: PageProps) {
+  const { page, query } = await searchParams;
   const { data } = await loaders("blog");
   const [blocks] = data;
   const block = [blocks][0].blocks;
-
-  // console.log("data" + JSON.stringify(data));
-  // console.log("blocks" + JSON.stringify(block));
 
   return (
     <div>
@@ -30,6 +28,10 @@ export default async function BlogRoute({ params }: PageProps) {
         headline="Check out our last articles"
         path="/api/articles"
         component={BlogCard}
+        showSearch
+        showPagination
+        page={page}
+        query={query}
       />
     </div>
   );

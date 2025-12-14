@@ -145,7 +145,7 @@ import { ArticleProps } from "@/types";
 import { getContent } from "@/data/loaders";
 
 import { PaginationComponent } from "./PaginationComponent";
-import { Search } from "@/components/Search"
+import { Search } from "@/components/Search";
 
 interface ContentListProps {
   headline: string;
@@ -159,7 +159,12 @@ interface ContentListProps {
   showPagination?: boolean;
 }
 
-async function loader(path: string, featured?: boolean, query?: string, page?:string ) {
+async function loader(
+  path: string,
+  featured?: boolean,
+  query?: string,
+  page?: string
+) {
   const { data, meta } = await getContent(path, featured, query, page);
   return {
     articles: (data as ArticleProps[]) || [],

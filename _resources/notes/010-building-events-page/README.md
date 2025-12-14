@@ -259,7 +259,7 @@ Now let's update the code between the `<form>` tags in the `EventSignupForm` com
 
 This is a simple form that we will use to build out our form.
 
-Now create   a new component called `SubmitButton` in the `components` folder and add the following code to it:
+Now create a new component called `SubmitButton` in the `components` folder and add the following code to it:
 
 ```tsx
 "use client";
@@ -270,10 +270,7 @@ interface SubmitButtonProps {
   className?: string;
 }
 
-export function SubmitButton({
-  text,
-  className,
-}: Readonly<SubmitButtonProps>) {
+export function SubmitButton({ text, className }: Readonly<SubmitButtonProps>) {
   const status = useFormStatus();
   return (
     <button
@@ -303,22 +300,28 @@ const eventsSubscribeSchema = z.object({
   email: z.string().email({
     message: "Please enter a valid email address",
   }),
-  telephone: z.string()
+  telephone: z
+    .string()
     .min(1, { message: "Please enter your phone number" })
-    .regex(/^(\+\d{1,3}[-.]?)?\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/, {
-      message: "Please enter a valid phone number",
-    }),
+    .regex(
+      /^(\+\d{1,3}[-.]?)?\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/,
+      {
+        message: "Please enter a valid phone number",
+      }
+    ),
 });
 
-
-export async function eventsSubscribeAction(prevState: any, formData: FormData) {
+export async function eventsSubscribeAction(
+  prevState: any,
+  formData: FormData
+) {
   const formDataObject = {
     firstName: formData.get("firstName"),
     lastName: formData.get("lastName"),
     email: formData.get("email"),
     telephone: formData.get("telephone"),
     eventId: formData.get("eventId"),
-  }
+  };
 
   const validatedFields = eventsSubscribeSchema.safeParse(formDataObject);
 
@@ -332,8 +335,6 @@ export async function eventsSubscribeAction(prevState: any, formData: FormData) 
       },
     };
   }
-
-
 
   const dataToSend: EventsSubscribeProps = {
     ...validatedFields.data,
@@ -362,7 +363,6 @@ export async function eventsSubscribeAction(prevState: any, formData: FormData) 
         ...formDataObject,
       },
       errorMessage: "Failed to Subscribe.",
-
     };
   }
 
@@ -376,7 +376,6 @@ export async function eventsSubscribeAction(prevState: any, formData: FormData) 
   };
 }
 ```
-
 
 Create a new service called `eventsSubscribeService` in the `services.ts` file and add the following code to it:
 
@@ -408,12 +407,11 @@ export async function eventsSubscribeService(data: EventsSubscribeProps) {
     console.error("Events Subscribe Service Error:", error);
   }
 }
-
 ```
 
 Completed code for `EventsSignupForm.tsx`:
 
-``` tsx
+```tsx
 "use client";
 import { useActionState } from "react";
 import { BlockRenderer } from "@/components/BlockRenderer";
@@ -564,7 +562,7 @@ export function EventSignupForm({
 
 ## Building Out Single Event Detail Page
 
-Finally, let's create a new folder called `[slug]`  with `page.tsx` file in the `events` folder and add the following code to it:
+Finally, let's create a new folder called `[slug]` with `page.tsx` file in the `events` folder and add the following code to it:
 
 ```tsx
 import type { EventProps } from "@/types";
@@ -582,7 +580,7 @@ async function loader(slug: string) {
 }
 
 interface ParamsProps {
-  params: Promise<{ slug: string }>
+  params: Promise<{ slug: string }>;
 }
 
 const EventCard = (props: Readonly<CardProps>) => (
@@ -601,7 +599,10 @@ export default async function SingleEventRoute({ params }: ParamsProps) {
           eventId={event.documentId}
           startDate={event.startDate}
           price={event.price}
-          image={{ url: event?.image?.url, alt: event?.image?.alternativeText || "Event image" }}
+          image={{
+            url: event?.image?.url,
+            alt: event?.image?.alternativeText || "Event image",
+          }}
         />
       </div>
       <ContentList
@@ -613,5 +614,4 @@ export default async function SingleEventRoute({ params }: ParamsProps) {
     </div>
   );
 }
-
 ```
