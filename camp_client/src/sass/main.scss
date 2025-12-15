@@ -1,3 +1,8 @@
+@use "base/mixins";
+@use "base/variables";
+@use "base/typography";
+@use "base/base";
+
 @use "components/header";
 @use "components/button";
 @use "components/footer";
@@ -7,7 +12,6 @@
 @use "components/content-items";
 @use "components/blog-preview";
 @use "components/pagination";
-
 @use "components/blog/featured-article";
 @use "components/blog/newsletter";
 @use "components/blog/article-intro";
