@@ -1,5 +1,5 @@
 @use "./variables";
-
+@use "./mixins" as m;
 *,
 *::after,
 *::before {
@@ -48,7 +48,7 @@ html {
 
   font-size: 62.5%; // 1rem = 10px; 10px/16px = 62.5%
 
-  @include respond(tab-land) {
+  @include m.respond(tab-land) {
     // width < 900?
     font-size: 55%; // 1 rem = 9px, 9/16 = 56.25%
   }
