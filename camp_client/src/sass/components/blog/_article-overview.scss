@@ -43,7 +43,10 @@
         border-radius: 0.8rem;
 
         &:hover {
-          color: adjust-color(#0041e8, 10%); // Darkened hover state
+          color: adjust-color(
+            #0041e8,
+            $lightness: -10%
+          ); // Darkened hover state
           transform: translateX(5px);
           text-decoration: underline;
         }
