@@ -15,9 +15,20 @@ export function StrapiImage({
   ...rest
 }: Readonly<StrapiImageProps>) {
   const imageUrl = getStrapiMedia(src);
+
+  console.log("this is the image url" + imageUrl);
+
   if (!imageUrl) return null;
 
-  return <Image src={imageUrl} alt={alt} className={className} {...rest} />;
+  return (
+    <Image
+      src={imageUrl}
+      alt={alt}
+      className={className}
+      {...rest}
+      unoptimized
+    />
+  );
 }
 
 export function getStrapiMedia(url: string | null) {

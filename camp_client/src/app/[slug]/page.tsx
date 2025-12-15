@@ -17,9 +17,9 @@ export default async function DynamicPageRoute({ params }: PageProps) {
   const slug = (await params).slug;
   const { data } = await loaders(slug);
   const [blocks] = data;
-  console.log(
-    "these are blocks from dynamic page route" + JSON.stringify(blocks)
-  );
+  // console.log(
+  //   "these are blocks from dynamic page route" + JSON.stringify(blocks)
+  // );
 
   const block = [blocks][0].blocks;
 

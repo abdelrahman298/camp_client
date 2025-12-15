@@ -37,6 +37,7 @@ export function Header({ data }: HeaderProps) {
   if (!data) return null;
 
   const { logo, navigation, cta } = data;
+  console.log("This is the Logo" + JSON.stringify(logo));
 
   return (
     <header className={`header ${headerLight ? "header--light" : ""}`}>
