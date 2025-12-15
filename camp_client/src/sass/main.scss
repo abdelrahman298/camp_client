@@ -1,7 +1,6 @@
-@use "base/mixins";
-@use "base/variables";
-@use "base/typography";
-@use "base/base";
+@use "./base/base";
+@use "./base/variables";
+@use "./base/typography";
 
 @use "components/header";
 @use "components/button";

@@ -1,5 +1,4 @@
-
-@import "./variables";
+@use "./variables";
 
 *,
 *::after,
@@ -9,7 +8,6 @@
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
 }
-
 
 body {
   background-color: $light-beige;
