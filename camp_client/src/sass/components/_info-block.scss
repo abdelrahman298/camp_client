@@ -1,3 +1,5 @@
+@use "../base/variables" as v;
+
 .info {
   display: flex;
   justify-content: space-between;
@@ -37,7 +39,7 @@
     }
 
     &--orange {
-      color: $orange;
+      color: v.$orange;
     }
   }
 
