@@ -1,4 +1,5 @@
-@use "./variables";
+@use "./variables" as v;
+
 
 *,
 *::after,
@@ -10,7 +11,7 @@
 }
 
 body {
-  background-color: $light-beige;
+  background-color: v.$light-beige;
 }
 
 main {
